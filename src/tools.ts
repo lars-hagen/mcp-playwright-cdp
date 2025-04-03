@@ -3,6 +3,25 @@ import { Tool } from "@modelcontextprotocol/sdk/types.js";
 export function createToolDefinitions(): Tool[] {
   return [
     {
+      name: "playwright_get_logs",
+      description: "Retrieve console logs from the browser",
+      inputSchema: {
+        type: "object",
+        properties: {
+          logTypes: { 
+            type: "array", 
+            description: "Types of logs to retrieve (e.g., ['log', 'error', 'warning', 'info']). If not specified, all types will be retrieved.",
+            items: { type: "string" }
+          },
+          limit: { 
+            type: "number", 
+            description: "Maximum number of log entries to retrieve (default: 100)" 
+          },
+        },
+        required: [],
+      },
+    },
+    {
       name: "playwright_navigate",
       description: "Navigate to a URL",
       inputSchema: {
@@ -12,7 +31,8 @@ export function createToolDefinitions(): Tool[] {
           width: { type: "number", description: "Viewport width in pixels (default: 1920)" },
           height: { type: "number", description: "Viewport height in pixels (default: 1080)" },
           timeout: { type: "number", description: "Navigation timeout in milliseconds" },
-          waitUntil: { type: "string", description: "Navigation wait condition" }
+          waitUntil: { type: "string", description: "Navigation wait condition" },
+          preserveLogs: { type: "boolean", description: "Whether to preserve console logs from previous navigations (default: false)" }
         },
         required: ["url"],
       },
@@ -160,7 +180,8 @@ export const BROWSER_TOOLS = [
   "playwright_fill",
   "playwright_select",
   "playwright_hover",
-  "playwright_evaluate"
+  "playwright_evaluate",
+  "playwright_get_logs"
 ];
 
 // API Request tools for conditional launch

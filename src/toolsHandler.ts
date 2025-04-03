@@ -85,6 +85,11 @@ export async function handleToolCall(
   switch (name) {
     case "playwright_navigate":
       try {
+        // Clear console logs unless preserveLogs is true
+        if (args.preserveLogs !== true) {
+          consoleLogs.length = 0;
+        }
+        
         await page!.goto(args.url, {
           timeout: args.timeout || 30000,
           waitUntil: args.waitUntil || "load"
@@ -92,7 +97,7 @@ export async function handleToolCall(
         return {
           content: [{
             type: "text",
-            text: `Navigated to ${args.url}`,
+            text: `Navigated to ${args.url}${args.preserveLogs ? ' (preserved console logs)' : ' (cleared console logs)'}`,
           }],
           isError: false,
         };
@@ -463,6 +468,43 @@ export async function handleToolCall(
           content: [{
             type: "text",
             text: `Failed to perform PATCH operation on ${args.url}: ${(error as Error).message}`,
+          }],
+          isError: true,
+        };
+      }
+
+    case "playwright_get_logs":
+      try {
+        // Get all logs
+        const allLogs = consoleLogs.slice();
+        
+        // Filter logs by type if logTypes is provided
+        let filteredLogs = allLogs;
+        if (args.logTypes && Array.isArray(args.logTypes) && args.logTypes.length > 0) {
+          const logTypePrefixes = args.logTypes.map((type: string) => `[${type}]`);
+          filteredLogs = allLogs.filter(log => 
+            logTypePrefixes.some((prefix: string) => log.startsWith(prefix))
+          );
+        }
+        
+        // Apply limit if provided
+        const limit = args.limit || 100;
+        const limitedLogs = filteredLogs.slice(-limit);
+        
+        return {
+          content: [{
+            type: "text",
+            text: limitedLogs.length > 0 
+              ? `Console logs:\n${limitedLogs.join('\n')}` 
+              : "No console logs found matching the criteria.",
+          }],
+          isError: false,
+        };
+      } catch (error) {
+        return {
+          content: [{
+            type: "text",
+            text: `Failed to retrieve console logs: ${(error as Error).message}`,
           }],
           isError: true,
         };

@@ -89,3 +89,14 @@ Execute JavaScript in the browser console.
 
 - **`script`** *(string)*:  
   JavaScript code to execute.
+
+---
+
+### playwright_get_logs
+Retrieve console logs from the browser.
+
+- **`logTypes`** *(array of strings, optional)*:  
+  Types of logs to retrieve (e.g., ['log', 'error', 'warning', 'info']). If not specified, all types will be retrieved.
+
+- **`limit`** *(number, optional, default: 100)*:  
+  Maximum number of log entries to retrieve.
