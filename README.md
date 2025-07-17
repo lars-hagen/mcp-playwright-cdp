@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/lars-hagen-mcp-playwright-cdp-badge.png)](https://mseep.ai/app/lars-hagen-mcp-playwright-cdp)
+
 # MCP Playwright CDP
 [![smithery badge](https://smithery.ai/badge/@lars-hagen/mcp-playwright-cdp)](https://smithery.ai/server/@lars-hagen/mcp-playwright-cdp)
 
