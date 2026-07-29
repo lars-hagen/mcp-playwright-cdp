@@ -19,7 +19,7 @@ COPY tsconfig.json ./
 RUN npm run build
 
 # Use a minimal Node.js image for running the project
-FROM mcr.microsoft.com/playwright:v1.50.0-jammy AS release
+FROM mcr.microsoft.com/playwright:v1.62.0-jammy AS release
 
 # Set the working directory
 WORKDIR /app

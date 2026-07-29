@@ -112,10 +112,11 @@ export async function handleToolCall(
           type: args.type || "png",
           fullPage: !!args.fullPage
         };
+        let screenshot: Buffer;
 
         if (args.selector) {
-          const element = await page!.$(args.selector);
-          if (!element) {
+          const locator = page!.locator(args.selector);
+          if (await locator.count() === 0) {
             return {
               content: [{
                 type: "text",
@@ -124,22 +125,21 @@ export async function handleToolCall(
               isError: true
             };
           }
-          screenshotOptions.element = element;
+          screenshot = await locator.screenshot({ type: args.type || "png" });
+        } else {
+          if (args.mask) {
+            screenshotOptions.mask = args.mask.map((selector: string) => page!.locator(selector));
+          }
+
+          screenshot = await page!.screenshot(screenshotOptions);
         }
 
-        if (args.mask) {
-          screenshotOptions.mask = await Promise.all(
-            args.mask.map(async (selector: string) => await page!.$(selector))
-          );
-        }
-
-        const screenshot = await page!.screenshot(screenshotOptions);
         const base64Screenshot = screenshot.toString('base64');
 
         const responseContent: (TextContent | ImageContent)[] = [];
 
         // Handle PNG file saving
-        if (args.savePng !== false) {
+        if (args.savePng === true) {
           const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
           const filename = `${args.name}-${timestamp}.png`;
           const downloadsDir = args.downloadsDir || defaultDownloadsPath;

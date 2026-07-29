@@ -1,17 +1,23 @@
 import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
 
-(async () => {
+let browser;
+
+try {
   console.log('Launching browser...');
-  const browser = await chromium.launch();
+  browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
   const page = await context.newPage();
-  
+
   console.log('Navigating to example.com...');
-  await page.goto('https://example.com/');
-  
-  // Get the h1 content
+  await page.goto('https://example.com/', { waitUntil: 'domcontentloaded' });
+
   const h1Content = await page.$eval('h1', (element) => element.textContent);
-  console.log('H1 content:', h1Content);
-  
-  await browser.close();
-})().catch(console.error); 
+  assert.equal(h1Content, 'Example Domain');
+  console.log('Browser smoke test passed.');
+} catch (error) {
+  console.error(error);
+  process.exitCode = 1;
+} finally {
+  await browser?.close();
+}
