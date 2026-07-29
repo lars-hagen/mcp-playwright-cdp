@@ -1,7 +1,7 @@
 # MCP Playwright CDP
-[![smithery badge](https://smithery.ai/badge/@lars-hagen/mcp-playwright-cdp)](https://smithery.ai/server/@lars-hagen/mcp-playwright-cdp)
-
+[![CI](https://github.com/lars-hagen/mcp-playwright-cdp/actions/workflows/node.js.yml/badge.svg)](https://github.com/lars-hagen/mcp-playwright-cdp/actions/workflows/node.js.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/lars-hagen/mcp-playwright-cdp/blob/main/LICENSE)
+[![Security Policy](https://img.shields.io/badge/security-policy-blue.svg)](https://github.com/lars-hagen/mcp-playwright-cdp/blob/main/SECURITY.md)
 
 A Model Context Protocol server that provides browser automation capabilities using Playwright with Chrome DevTools Protocol (CDP) support. This server enables LLMs to interact with web pages, take screenshots, and execute JavaScript in a real browser environment, with the ability to connect to existing Chrome instances via CDP.
 
@@ -10,8 +10,6 @@ A Model Context Protocol server that provides browser automation capabilities us
 This project is in maintenance mode. Focused fixes for security, compatibility, and documentation are welcome. It is not currently published to the npm registry. The latest source release is the `v0.2.10` Git tag from February 2025.
 
 > This is a fork of [executeautomation/mcp-playwright](https://github.com/executeautomation/mcp-playwright) v0.2.7, enhanced with CDP support for connecting to running Chrome instances.
-
-<a href="https://glama.ai/mcp/servers/fdvu5n58kv"><img width="380" height="200" src="https://glama.ai/mcp/servers/fdvu5n58kv/badge" alt="Playwright CDP MCP server" /></a>
 
 ## Key Features
 
