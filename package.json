@@ -28,7 +28,7 @@
     "url": "https://github.com/lars-hagen/mcp-playwright-cdp.git"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.30.0",
+    "@modelcontextprotocol/sdk": "1.32.0",
     "playwright": "1.62.0",
     "@playwright/browser-chromium": "1.62.0"
   },
